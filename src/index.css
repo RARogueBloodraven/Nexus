@@ -104,7 +104,7 @@ body {
 
 /* Disabled dates */
 .react-calendar__tile:disabled {
-  color: #9CA3AF !important;
+  color: #2a4574 !important;
   background: #F3F4F6 !important;
 }
 
