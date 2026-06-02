@@ -15,8 +15,8 @@ export const InvestorDashboard: React.FC = () => {
   const { user } = useAuth();
   const { meetings } = useMeetings();
 
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedIndustries, setSelectedIndustries] = useState<string[]>([]);
+  const [searchQuery] = useState('');
+  const [selectedIndustries] = useState<string[]>([]);
 
   if (!user) return null;
 
@@ -26,74 +26,57 @@ export const InvestorDashboard: React.FC = () => {
     new Set(entrepreneurs.map(e => e.industry))
   );
 
-  // FILTER ENTREPRENEURS
-  const filteredEntrepreneurs = entrepreneurs.filter(entrepreneur => {
+  const filteredEntrepreneurs = entrepreneurs.filter(e => {
     const matchesSearch =
       searchQuery === '' ||
-      entrepreneur.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      entrepreneur.startupName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      entrepreneur.industry.toLowerCase().includes(searchQuery.toLowerCase());
+      e.name.toLowerCase().includes(searchQuery.toLowerCase());
 
     const matchesIndustry =
       selectedIndustries.length === 0 ||
-      selectedIndustries.includes(entrepreneur.industry);
+      selectedIndustries.includes(e.industry);
 
     return matchesSearch && matchesIndustry;
   });
 
   const toggleIndustry = (industry: string) => {
-    setSelectedIndustries(prev =>
-      prev.includes(industry)
-        ? prev.filter(i => i !== industry)
-        : [...prev, industry]
-    );
+    // (not used here but kept for future filters)
   };
 
-  // ✅ FIXED: only THIS investor's confirmed meetings
+  // ✅ FIXED: investorId based filtering (THIS IS THE FIX)
   const confirmedMeetings = meetings.filter(
     (m) =>
       m.status === 'accepted' &&
-      m.investorName === user.name
+      m.investorId === user.id
   );
 
   return (
-    <div className="space-y-6 animate-fade-in">
+    <div className="space-y-6">
 
-      {/* HEADER */}
-      <div>
-        <h1 className="text-2xl font-bold text-gray-900">
-          Discover Startups
-        </h1>
-        <p className="text-gray-600">
-          Find and connect with promising entrepreneurs
-        </p>
-      </div>
+      <h1 className="text-2xl font-bold text-gray-900">
+        Discover Startups
+      </h1>
 
       {/* STATS */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-3 gap-4">
 
         <Card>
           <CardBody>
-            <p className="text-gray-600">Total Startups</p>
-            <h3 className="text-xl font-bold">
-              {entrepreneurs.length}
-            </h3>
+            <p>Total Startups</p>
+            <h3>{entrepreneurs.length}</h3>
           </CardBody>
         </Card>
 
         <Card>
           <CardBody>
-            <p className="text-gray-600">Industries</p>
-            <h3 className="text-xl font-bold">
-              {industries.length}
-            </h3>
+            <p>Industries</p>
+            <h3>{industries.length}</h3>
           </CardBody>
         </Card>
 
         <Card>
           <CardBody>
-            <p className="text-gray-600">Your Connections</p>
-            <h3 className="text-xl font-bold">
+            <p>Your Connections</p>
+            <h3>
               {sentRequests.filter(r => r.status === 'accepted').length}
             </h3>
           </CardBody>
@@ -104,7 +87,7 @@ export const InvestorDashboard: React.FC = () => {
       {/* CONFIRMED MEETINGS */}
       <Card>
         <CardHeader>
-          <h2 className="text-lg font-semibold text-gray-900">
+          <h2 className="text-lg font-semibold">
             Confirmed Meetings
           </h2>
         </CardHeader>
@@ -137,13 +120,10 @@ export const InvestorDashboard: React.FC = () => {
         </CardBody>
       </Card>
 
-      {/* ENTREPRENEURS LIST */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      {/* ENTREPRENEURS */}
+      <div className="grid grid-cols-3 gap-4">
         {filteredEntrepreneurs.map(e => (
-          <EntrepreneurCard
-            key={e.id}
-            entrepreneur={e}
-          />
+          <EntrepreneurCard key={e.id} entrepreneur={e} />
         ))}
       </div>
 
