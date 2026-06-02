@@ -1,10 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Users, PieChart, Filter, Search, PlusCircle } from 'lucide-react';
-import { Button } from '../../components/ui/Button';
 import { Card, CardBody, CardHeader } from '../../components/ui/Card';
-import { Input } from '../../components/ui/Input';
-import { Badge } from '../../components/ui/Badge';
 import { EntrepreneurCard } from '../../components/entrepreneur/EntrepreneurCard';
 import { useAuth } from '../../context/AuthContext';
 import { entrepreneurs } from '../../data/users';
@@ -38,16 +33,12 @@ export const InvestorDashboard: React.FC = () => {
     return matchesSearch && matchesIndustry;
   });
 
-  // ✅ DEBUG SAFE VERSION (handles mismatch issues)
-  const confirmedMeetings = meetings.filter(m => {
-    return (
+  // ✅ FIXED: ONLY THIS INVESTOR'S MEETINGS
+  const confirmedMeetings = meetings.filter(
+    (m) =>
       m.status === 'accepted' &&
-      (
-        m.investorId === user.id ||        // preferred
-        m.investorName === user.name       // fallback safety
-      )
-    );
-  });
+      m.investorId === user.id
+  );
 
   return (
     <div className="space-y-6">
@@ -104,15 +95,9 @@ export const InvestorDashboard: React.FC = () => {
                   key={m.id}
                   className="p-3 border rounded bg-white"
                 >
-                  <p>
-                    <b>Investor:</b> {m.investorName}
-                  </p>
-                  <p>
-                    <b>Entrepreneur:</b> {m.entrepreneurName}
-                  </p>
-                  <p>
-                    <b>Date:</b> {m.date}
-                  </p>
+                  <p><b>Investor:</b> {m.investorName}</p>
+                  <p><b>Entrepreneur:</b> {m.entrepreneurName}</p>
+                  <p><b>Date:</b> {m.date}</p>
                 </div>
               ))}
             </div>

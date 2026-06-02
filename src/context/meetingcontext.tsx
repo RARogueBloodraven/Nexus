@@ -4,6 +4,7 @@ export type MeetingStatus = 'pending' | 'accepted' | 'rejected';
 
 export interface MeetingRequest {
   id: string;
+  investorId: string; // ✅ REQUIRED FOR INVESTOR FILTERING
   investorName: string;
   entrepreneurName: string;
   date: string;
@@ -21,32 +22,28 @@ const MeetingContext = createContext<MeetingContextType | undefined>(undefined);
 export const MeetingProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [meetings, setMeetings] = useState<MeetingRequest[]>([
     {
-      id: 'm1',
+      id: '1',
+      investorId: 'inv1',
       investorName: 'John Investor',
       entrepreneurName: 'Alice Startup',
       date: '2026-06-10',
       status: 'pending',
     },
     {
-      id: 'm2',
-      investorName: 'Sarah Capital',
-      entrepreneurName: 'TechNova',
-      date: '2026-06-11',
-      status: 'pending',
-    },
-    {
-      id: 'm3',
-      investorName: 'Michael Ventures',
-      entrepreneurName: 'GreenFoods',
+      id: '2',
+      investorId: 'inv1',
+      investorName: 'John Investor',
+      entrepreneurName: 'Tech Startup',
       date: '2026-06-12',
-      status: 'pending',
+      status: 'accepted',
     },
     {
-      id: 'm4',
-      investorName: 'Ayesha Investments',
-      entrepreneurName: 'CloudSync',
-      date: '2026-06-13',
-      status: 'pending',
+      id: '3',
+      investorId: 'inv2',
+      investorName: 'Sarah Investor',
+      entrepreneurName: 'AI Startup',
+      date: '2026-06-15',
+      status: 'accepted',
     },
   ]);
 
@@ -61,7 +58,9 @@ export const MeetingProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
   const updateMeetingStatus = (id: string, status: MeetingStatus) => {
     setMeetings(prev =>
-      prev.map(m => (m.id === id ? { ...m, status } : m))
+      prev.map(m =>
+        m.id === id ? { ...m, status } : m
+      )
     );
   };
 
