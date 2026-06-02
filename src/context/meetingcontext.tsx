@@ -21,10 +21,31 @@ const MeetingContext = createContext<MeetingContextType | undefined>(undefined);
 export const MeetingProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [meetings, setMeetings] = useState<MeetingRequest[]>([
     {
-      id: '1',
+      id: 'm1',
       investorName: 'John Investor',
       entrepreneurName: 'Alice Startup',
       date: '2026-06-10',
+      status: 'pending',
+    },
+    {
+      id: 'm2',
+      investorName: 'Sarah Capital',
+      entrepreneurName: 'TechNova',
+      date: '2026-06-11',
+      status: 'pending',
+    },
+    {
+      id: 'm3',
+      investorName: 'Michael Ventures',
+      entrepreneurName: 'GreenFoods',
+      date: '2026-06-12',
+      status: 'pending',
+    },
+    {
+      id: 'm4',
+      investorName: 'Ayesha Investments',
+      entrepreneurName: 'CloudSync',
+      date: '2026-06-13',
       status: 'pending',
     },
   ]);
