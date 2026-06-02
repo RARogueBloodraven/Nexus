@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { Card, CardBody, CardHeader } from '../../components/ui/Card';
-import { EntrepreneurCard } from '../../components/entrepreneur/EntrepreneurCard';
 import { useAuth } from '../../context/AuthContext';
 import { entrepreneurs } from '../../data/users';
 import { getRequestsFromInvestor } from '../../data/collaborationRequests';
 import { useMeetings } from '../../context/meetingcontext';
+import { Card, CardBody, CardHeader } from '../../components/ui/Card';
+import { EntrepreneurCard } from '../../components/entrepreneur/EntrepreneurCard';
 
 export const InvestorDashboard: React.FC = () => {
   const { user } = useAuth();
@@ -22,85 +22,50 @@ export const InvestorDashboard: React.FC = () => {
   );
 
   const filteredEntrepreneurs = entrepreneurs.filter(e => {
-    const matchesSearch =
+    return (
       searchQuery === '' ||
-      e.name.toLowerCase().includes(searchQuery.toLowerCase());
-
-    const matchesIndustry =
-      selectedIndustries.length === 0 ||
-      selectedIndustries.includes(e.industry);
-
-    return matchesSearch && matchesIndustry;
+      e.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
   });
 
-  // ✅ FIXED: ONLY THIS INVESTOR'S MEETINGS
+  // ✅ ONLY THIS INVESTOR'S ACCEPTED MEETINGS
   const confirmedMeetings = meetings.filter(
-    (m) =>
-      m.status === 'accepted' &&
-      m.investorId === user.id
+    m => m.status === 'accepted' && m.investorId === user.id
   );
 
   return (
     <div className="space-y-6">
 
-      <h1 className="text-2xl font-bold text-gray-900">
-        Discover Startups
-      </h1>
+      <h1 className="text-2xl font-bold">Investor Dashboard</h1>
 
       {/* STATS */}
       <div className="grid grid-cols-3 gap-4">
-
+        <Card><CardBody>Total: {entrepreneurs.length}</CardBody></Card>
+        <Card><CardBody>Industries: {industries.length}</CardBody></Card>
         <Card>
           <CardBody>
-            <p>Total Startups</p>
-            <h3>{entrepreneurs.length}</h3>
+            Connections: {sentRequests.filter(r => r.status === 'accepted').length}
           </CardBody>
         </Card>
-
-        <Card>
-          <CardBody>
-            <p>Industries</p>
-            <h3>{industries.length}</h3>
-          </CardBody>
-        </Card>
-
-        <Card>
-          <CardBody>
-            <p>Your Connections</p>
-            <h3>
-              {sentRequests.filter(r => r.status === 'accepted').length}
-            </h3>
-          </CardBody>
-        </Card>
-
       </div>
 
       {/* CONFIRMED MEETINGS */}
       <Card>
         <CardHeader>
-          <h2 className="text-lg font-semibold">
-            Confirmed Meetings
-          </h2>
+          <h2>Confirmed Meetings</h2>
         </CardHeader>
 
         <CardBody>
           {confirmedMeetings.length === 0 ? (
-            <p className="text-gray-500">
-              No confirmed meetings yet
-            </p>
+            <p>No confirmed meetings yet</p>
           ) : (
-            <div className="space-y-3">
-              {confirmedMeetings.map(m => (
-                <div
-                  key={m.id}
-                  className="p-3 border rounded bg-white"
-                >
-                  <p><b>Investor:</b> {m.investorName}</p>
-                  <p><b>Entrepreneur:</b> {m.entrepreneurName}</p>
-                  <p><b>Date:</b> {m.date}</p>
-                </div>
-              ))}
-            </div>
+            confirmedMeetings.map(m => (
+              <div key={m.id} className="p-3 border rounded mb-2">
+                <p><b>Investor:</b> {m.investorName}</p>
+                <p><b>Entrepreneur:</b> {m.entrepreneurName}</p>
+                <p><b>Date:</b> {m.date}</p>
+              </div>
+            ))
           )}
         </CardBody>
       </Card>

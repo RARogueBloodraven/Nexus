@@ -4,7 +4,7 @@ export type MeetingStatus = 'pending' | 'accepted' | 'rejected';
 
 export interface MeetingRequest {
   id: string;
-  investorId: string; // ✅ REQUIRED FOR INVESTOR FILTERING
+  investorId: string; 
   investorName: string;
   entrepreneurName: string;
   date: string;
@@ -31,19 +31,19 @@ export const MeetingProvider: React.FC<{ children: React.ReactNode }> = ({ child
     },
     {
       id: '2',
-      investorId: 'inv1',
+      investorId: 'inv2',
       investorName: 'John Investor',
       entrepreneurName: 'Tech Startup',
       date: '2026-06-12',
-      status: 'accepted',
+      status: 'pending',
     },
     {
       id: '3',
-      investorId: 'inv2',
+      investorId: 'inv3',
       investorName: 'Sarah Investor',
       entrepreneurName: 'AI Startup',
       date: '2026-06-15',
-      status: 'accepted',
+      status: 'pending',
     },
   ]);
 
