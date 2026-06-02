@@ -38,16 +38,16 @@ export const InvestorDashboard: React.FC = () => {
     return matchesSearch && matchesIndustry;
   });
 
-  const toggleIndustry = (industry: string) => {
-    // (not used here but kept for future filters)
-  };
-
-  // ✅ FIXED: investorId based filtering (THIS IS THE FIX)
-  const confirmedMeetings = meetings.filter(
-    (m) =>
+  // ✅ DEBUG SAFE VERSION (handles mismatch issues)
+  const confirmedMeetings = meetings.filter(m => {
+    return (
       m.status === 'accepted' &&
-      m.investorId === user.id
-  );
+      (
+        m.investorId === user.id ||        // preferred
+        m.investorName === user.name       // fallback safety
+      )
+    );
+  });
 
   return (
     <div className="space-y-6">
