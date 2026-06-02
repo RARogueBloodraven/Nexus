@@ -6,9 +6,14 @@ import { useMeetings } from '../../context/meetingcontext';
 type ValuePiece = Date | null;
 type Value = ValuePiece | [ValuePiece, ValuePiece];
 
+type Slot = {
+  id: string;
+  date: string;
+};
+
 const CalendarPage: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
-  const [availableSlots, setAvailableSlots] = useState<string[]>([]);
+  const [availableSlots, setAvailableSlots] = useState<Slot[]>([]);
 
   const { meetings } = useMeetings();
 
@@ -17,19 +22,38 @@ const CalendarPage: React.FC = () => {
     (m) => m.status === 'accepted'
   );
 
-  // format date safely
+  // FIXED: safe local date format (no UTC bug)
   const formatDate = (date: Date) => {
-    return date.toISOString().split('T')[0];
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
   };
 
-  // add availability slot
+  // ADD SLOT
   const addSlot = (date: Date) => {
     const formatted = formatDate(date);
 
     setAvailableSlots((prev) => {
-      if (prev.includes(formatted)) return prev;
-      return [...prev, formatted];
+      const exists = prev.some((s) => s.date === formatted);
+      if (exists) return prev;
+
+      return [
+        ...prev,
+        {
+          id: crypto.randomUUID(),
+          date: formatted,
+        },
+      ];
     });
+  };
+
+  // DELETE SLOT
+  const deleteSlot = (id: string) => {
+    setAvailableSlots((prev) =>
+      prev.filter((slot) => slot.id !== id)
+    );
   };
 
   return (
@@ -38,7 +62,7 @@ const CalendarPage: React.FC = () => {
         Meeting Calendar
       </h1>
 
-      {/* Calendar */}
+      {/* CALENDAR */}
       <div className="bg-white p-4 rounded shadow border">
         <Calendar
           onChange={(value: Value) => {
@@ -49,7 +73,7 @@ const CalendarPage: React.FC = () => {
           value={selectedDate}
           onClickDay={addSlot}
 
-          // SHOW MEETINGS ON CALENDAR
+          // GREEN MEETING DOT
           tileContent={({ date }) => {
             const day = formatDate(date);
 
@@ -64,7 +88,7 @@ const CalendarPage: React.FC = () => {
         />
       </div>
 
-      {/* Availability Slots */}
+      {/* AVAILABILITY SLOTS */}
       <div className="mt-6">
         <h2 className="text-lg font-semibold text-black">
           Your Availability Slots
@@ -78,17 +102,24 @@ const CalendarPage: React.FC = () => {
           <ul className="mt-2 space-y-2">
             {availableSlots.map((slot) => (
               <li
-                key={slot}
-                className="p-2 bg-green-100 text-green-800 rounded flex justify-between"
+                key={slot.id}
+                className="p-2 bg-green-100 text-green-800 rounded flex justify-between items-center"
               >
-                <span>{slot}</span>
+                <span>{slot.date}</span>
+
+                <button
+                  onClick={() => deleteSlot(slot.id)}
+                  className="text-red-500 font-bold"
+                >
+                  delete
+                </button>
               </li>
             ))}
           </ul>
         )}
       </div>
 
-      {/* Accepted Meetings List */}
+      {/* CONFIRMED MEETINGS */}
       <div className="mt-8">
         <h2 className="text-lg font-semibold text-black">
           Confirmed Meetings
