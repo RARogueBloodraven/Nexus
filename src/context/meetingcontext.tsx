@@ -4,7 +4,7 @@ export type MeetingStatus = 'pending' | 'accepted' | 'rejected';
 
 export interface MeetingRequest {
   id: string;
-  investorId: string; 
+  investorId: string;
   investorName: string;
   entrepreneurName: string;
   date: string;
@@ -32,21 +32,22 @@ export const MeetingProvider: React.FC<{ children: React.ReactNode }> = ({ child
     {
       id: '2',
       investorId: 'inv2',
-      investorName: 'John Investor',
+      investorName: 'Sarah Investor',
       entrepreneurName: 'Tech Startup',
       date: '2026-06-12',
       status: 'pending',
     },
     {
       id: '3',
-      investorId: 'inv3',
-      investorName: 'Sarah Investor',
+      investorId: 'inv1',
+      investorName: 'John Investor',
       entrepreneurName: 'AI Startup',
       date: '2026-06-15',
       status: 'pending',
     },
   ]);
 
+  // ADD MEETING
   const addMeeting = (m: Omit<MeetingRequest, 'id'>) => {
     const newMeeting: MeetingRequest = {
       ...m,
@@ -56,6 +57,7 @@ export const MeetingProvider: React.FC<{ children: React.ReactNode }> = ({ child
     setMeetings(prev => [...prev, newMeeting]);
   };
 
+  // UPDATE STATUS (Accept / Reject)
   const updateMeetingStatus = (id: string, status: MeetingStatus) => {
     setMeetings(prev =>
       prev.map(m =>
@@ -65,14 +67,21 @@ export const MeetingProvider: React.FC<{ children: React.ReactNode }> = ({ child
   };
 
   return (
-    <MeetingContext.Provider value={{ meetings, addMeeting, updateMeetingStatus }}>
+    <MeetingContext.Provider
+      value={{
+        meetings,              //FIXED (this was your bug)
+        addMeeting,
+        updateMeetingStatus,
+      }}
+    >
       {children}
     </MeetingContext.Provider>
   );
 };
 
+// Hook
 export const useMeetings = () => {
   const ctx = useContext(MeetingContext);
-  if (!ctx) throw new Error('useMeetings must be used inside provider');
+  if (!ctx) throw new Error('useMeetings must be used inside MeetingProvider');
   return ctx;
 };

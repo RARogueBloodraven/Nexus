@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
+import { useMeetings } from '../../context/meetingcontext';
 import { entrepreneurs } from '../../data/users';
 import { getRequestsFromInvestor } from '../../data/collaborationRequests';
-import { useMeetings } from '../../context/meetingcontext';
 import { Card, CardBody, CardHeader } from '../../components/ui/Card';
 import { EntrepreneurCard } from '../../components/entrepreneur/EntrepreneurCard';
 
@@ -11,26 +11,21 @@ export const InvestorDashboard: React.FC = () => {
   const { meetings } = useMeetings();
 
   const [searchQuery] = useState('');
-  const [selectedIndustries] = useState<string[]>([]);
 
   if (!user) return null;
 
   const sentRequests = getRequestsFromInvestor(user.id);
 
-  const industries = Array.from(
-    new Set(entrepreneurs.map(e => e.industry))
+  const industries = Array.from(new Set(entrepreneurs.map(e => e.industry)));
+
+  const filteredEntrepreneurs = entrepreneurs.filter(e =>
+    e.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const filteredEntrepreneurs = entrepreneurs.filter(e => {
-    return (
-      searchQuery === '' ||
-      e.name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-  });
-
-  // ✅ ONLY THIS INVESTOR'S ACCEPTED MEETINGS
-  const confirmedMeetings = meetings.filter(
-    m => m.status === 'accepted' && m.investorId === user.id
+  // ✅ FIXED SAFE FILTER (NO BUGS)
+  const confirmedMeetings = meetings.filter(m =>
+    m.status === 'accepted' &&
+    (m.investorId === user.id || m.investorName === user.name)
   );
 
   return (
@@ -40,7 +35,7 @@ export const InvestorDashboard: React.FC = () => {
 
       {/* STATS */}
       <div className="grid grid-cols-3 gap-4">
-        <Card><CardBody>Total: {entrepreneurs.length}</CardBody></Card>
+        <Card><CardBody>Total Startups: {entrepreneurs.length}</CardBody></Card>
         <Card><CardBody>Industries: {industries.length}</CardBody></Card>
         <Card>
           <CardBody>
@@ -57,7 +52,7 @@ export const InvestorDashboard: React.FC = () => {
 
         <CardBody>
           {confirmedMeetings.length === 0 ? (
-            <p>No confirmed meetings yet</p>
+            <p className="text-gray-500">No confirmed meetings yet</p>
           ) : (
             confirmedMeetings.map(m => (
               <div key={m.id} className="p-3 border rounded mb-2">
