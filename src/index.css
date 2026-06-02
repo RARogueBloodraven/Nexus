@@ -6,8 +6,8 @@
 body {
   margin: 0;
   font-family: Inter, Arial, sans-serif;
-  background-color: #0F172A;
-  color: #F8FAFC;
+  background-color: #ffffff;
+  color: #111827;
 }
 
 /* Custom buttons only */
@@ -25,7 +25,7 @@ body {
 }
 
 /* ========================= */
-/* REACT CALENDAR FIX */
+/* REACT CALENDAR FIX        */
 /* ========================= */
 
 .react-calendar {
@@ -39,7 +39,7 @@ body {
   font-family: Inter, Arial, sans-serif;
 }
 
-/* Navigation (month/year + arrows) */
+/* Navigation */
 .react-calendar__navigation {
   margin-bottom: 12px;
 }
@@ -56,7 +56,7 @@ body {
   background: #E5E7EB !important;
 }
 
-/* Weekday headings */
+/* Weekdays */
 .react-calendar__month-view__weekdays {
   text-align: center;
   font-weight: bold;
@@ -71,7 +71,7 @@ body {
   text-decoration: none;
 }
 
-/* Day cells */
+/* Days */
 .react-calendar__tile {
   color: #111827 !important;
   background: transparent !important;
@@ -96,7 +96,6 @@ body {
   color: white !important;
 }
 
-/* Selected + Hover */
 .react-calendar__tile--active:hover {
   background: #1D4ED8 !important;
   color: white !important;
@@ -104,15 +103,20 @@ body {
 
 /* Disabled dates */
 .react-calendar__tile:disabled {
-  color: #2a4574 !important;
+  color: #9CA3AF !important;
   background: #F3F4F6 !important;
 }
 
-/* Meeting dot */
+/* ========================= */
+/* MEETING DOT (GREEN)       */
+/* ========================= */
+
 .meeting-dot {
   width: 8px;
   height: 8px;
   background: #22C55E;
   border-radius: 9999px;
   margin: 2px auto 0;
+  box-shadow: 0 0 4px rgba(34, 197, 94, 0.6);
 }
+🎯 What

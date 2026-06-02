@@ -33,11 +33,13 @@ const CalendarPage: React.FC = () => {
   };
 
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">Meeting Calendar</h1>
+    <div className="p-6 bg-white text-black min-h-screen">
+      <h1 className="text-2xl font-bold mb-4">
+        Meeting Calendar
+      </h1>
 
       {/* Calendar */}
-      <div className="bg-white p-4 rounded shadow">
+      <div className="bg-white p-4 rounded shadow border">
         <Calendar
           onChange={(value: Value) => {
             if (value instanceof Date) {
@@ -46,7 +48,7 @@ const CalendarPage: React.FC = () => {
           }}
           value={selectedDate}
           onClickDay={addSlot}
-          
+
           // SHOW MEETINGS ON CALENDAR
           tileContent={({ date }) => {
             const day = formatDate(date);
@@ -64,16 +66,20 @@ const CalendarPage: React.FC = () => {
 
       {/* Availability Slots */}
       <div className="mt-6">
-        <h2 className="text-lg font-semibold">Your Availability Slots</h2>
+        <h2 className="text-lg font-semibold text-black">
+          Your Availability Slots
+        </h2>
 
         {availableSlots.length === 0 ? (
-          <p className="text-gray-500 mt-2">No slots added yet</p>
+          <p className="text-black mt-2">
+            No slots added yet
+          </p>
         ) : (
           <ul className="mt-2 space-y-2">
             {availableSlots.map((slot) => (
               <li
                 key={slot}
-                className="p-2 bg-gray-100 rounded flex justify-between"
+                className="p-2 bg-green-100 text-green-800 rounded flex justify-between"
               >
                 <span>{slot}</span>
               </li>
@@ -84,19 +90,27 @@ const CalendarPage: React.FC = () => {
 
       {/* Accepted Meetings List */}
       <div className="mt-8">
-        <h2 className="text-lg font-semibold">Confirmed Meetings</h2>
+        <h2 className="text-lg font-semibold text-black">
+          Confirmed Meetings
+        </h2>
 
         {acceptedMeetings.length === 0 ? (
-          <p className="text-gray-500 mt-2">No confirmed meetings yet</p>
+          <p className="text-black mt-2">
+            No confirmed meetings yet
+          </p>
         ) : (
           <ul className="mt-2 space-y-2">
             {acceptedMeetings.map((m) => (
               <li
                 key={m.id}
-                className="p-3 bg-white shadow rounded"
+                className="p-3 bg-white text-black border rounded"
               >
-                <p><b>Investor:</b> {m.investorName}</p>
-                <p><b>Date:</b> {m.date}</p>
+                <p>
+                  <b>Investor:</b> {m.investorName}
+                </p>
+                <p>
+                  <b>Date:</b> {m.date}
+                </p>
               </li>
             ))}
           </ul>
