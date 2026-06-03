@@ -22,7 +22,7 @@ const documents = [
     type: 'Spreadsheet',
     size: '1.8 MB',
     lastModified: '2024-02-10',
-    shared: false
+    shared: true
   },
   {
     id: 3,
@@ -38,7 +38,7 @@ const documents = [
     type: 'PDF',
     size: '5.1 MB',
     lastModified: '2024-01-28',
-    shared: false
+    shared: true
   }
 ];
 
