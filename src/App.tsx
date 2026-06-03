@@ -54,7 +54,8 @@ function App() {
 
         {/* documentchamber Routes */}
         <Route path="/documents" element={<DashboardLayout />}>
-          <Route index element={<DocumentChamber />} />
+          <Route index element={<DocumentsPage />} />
+          <Route path="chamber" element={<DocumentChamber />} />
         </Route>
 
 
@@ -90,10 +91,6 @@ function App() {
 
         <Route path="/notifications" element={<DashboardLayout />}>
           <Route index element={<NotificationsPage />} />
-        </Route>
-
-        <Route path="/documents" element={<DashboardLayout />}>
-          <Route index element={<DocumentsPage />} />
         </Route>
 
         <Route path="/settings" element={<DashboardLayout />}>
