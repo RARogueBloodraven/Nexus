@@ -31,33 +31,30 @@ export const MeetingProvider: React.FC<{ children: React.ReactNode }> = ({ child
     },
     {
       id: '2',
-      investorId: 'inv2',
-      investorName: 'Sarah Investor',
+      investorId: 'inv1',
+      investorName: 'John Investor',
       entrepreneurName: 'Tech Startup',
       date: '2026-06-12',
-      status: 'pending',
+      status: 'accepted',
     },
     {
       id: '3',
-      investorId: 'inv1',
-      investorName: 'John Investor',
+      investorId: 'inv2',
+      investorName: 'Sarah Investor',
       entrepreneurName: 'AI Startup',
       date: '2026-06-15',
       status: 'pending',
     },
   ]);
 
-  // ADD MEETING
   const addMeeting = (m: Omit<MeetingRequest, 'id'>) => {
     const newMeeting: MeetingRequest = {
       ...m,
       id: crypto.randomUUID(),
     };
-
     setMeetings(prev => [...prev, newMeeting]);
   };
 
-  // UPDATE STATUS (Accept / Reject)
   const updateMeetingStatus = (id: string, status: MeetingStatus) => {
     setMeetings(prev =>
       prev.map(m =>
@@ -67,21 +64,14 @@ export const MeetingProvider: React.FC<{ children: React.ReactNode }> = ({ child
   };
 
   return (
-    <MeetingContext.Provider
-      value={{
-        meetings,              //FIXED (this was your bug)
-        addMeeting,
-        updateMeetingStatus,
-      }}
-    >
+    <MeetingContext.Provider value={{ meetings, addMeeting, updateMeetingStatus }}>
       {children}
     </MeetingContext.Provider>
   );
 };
 
-// Hook
 export const useMeetings = () => {
   const ctx = useContext(MeetingContext);
-  if (!ctx) throw new Error('useMeetings must be used inside MeetingProvider');
+  if (!ctx) throw new Error('useMeetings must be used inside provider');
   return ctx;
 };

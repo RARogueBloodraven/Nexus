@@ -16,16 +16,17 @@ export const InvestorDashboard: React.FC = () => {
 
   const sentRequests = getRequestsFromInvestor(user.id);
 
-  const industries = Array.from(new Set(entrepreneurs.map(e => e.industry)));
+  const industries = Array.from(
+    new Set(entrepreneurs.map(e => e.industry))
+  );
 
   const filteredEntrepreneurs = entrepreneurs.filter(e =>
     e.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  // ✅ FIXED SAFE FILTER (NO BUGS)
-  const confirmedMeetings = meetings.filter(m =>
-    m.status === 'accepted' &&
-    (m.investorId === user.id || m.investorName === user.name)
+  // ✅ FIXED: ONLY THIS INVESTOR'S MEETINGS
+  const confirmedMeetings = meetings.filter(
+    m => m.status === 'accepted' && m.investorId === user.id
   );
 
   return (
@@ -35,8 +36,14 @@ export const InvestorDashboard: React.FC = () => {
 
       {/* STATS */}
       <div className="grid grid-cols-3 gap-4">
-        <Card><CardBody>Total Startups: {entrepreneurs.length}</CardBody></Card>
-        <Card><CardBody>Industries: {industries.length}</CardBody></Card>
+        <Card>
+          <CardBody>Total Startups: {entrepreneurs.length}</CardBody>
+        </Card>
+
+        <Card>
+          <CardBody>Industries: {industries.length}</CardBody>
+        </Card>
+
         <Card>
           <CardBody>
             Connections: {sentRequests.filter(r => r.status === 'accepted').length}

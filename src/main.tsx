@@ -8,10 +8,10 @@ import { MeetingProvider } from './context/meetingcontext';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <MeetingProvider>
-      <AuthProvider>
+    <AuthProvider>
+      <MeetingProvider>
         <App />
-      </AuthProvider>
-    </MeetingProvider>
+      </MeetingProvider>
+    </AuthProvider>
   </StrictMode>
 );
