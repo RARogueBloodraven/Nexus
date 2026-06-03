@@ -23,7 +23,7 @@ export const MeetingProvider: React.FC<{ children: React.ReactNode }> = ({ child
   const [meetings, setMeetings] = useState<MeetingRequest[]>([
     {
       id: '1',
-      investorId: 'inv1',
+      investorId: '1',
       investorName: 'John Investor',
       entrepreneurName: 'Alice Startup',
       date: '2026-06-10',
@@ -31,15 +31,15 @@ export const MeetingProvider: React.FC<{ children: React.ReactNode }> = ({ child
     },
     {
       id: '2',
-      investorId: 'inv1',
+      investorId: '2',
       investorName: 'John Investor',
       entrepreneurName: 'Tech Startup',
       date: '2026-06-12',
-      status: 'accepted',
+      status: 'pending',
     },
     {
       id: '3',
-      investorId: 'inv2',
+      investorId: '3',
       investorName: 'Sarah Investor',
       entrepreneurName: 'AI Startup',
       date: '2026-06-15',
