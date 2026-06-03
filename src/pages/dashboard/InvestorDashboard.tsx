@@ -29,8 +29,7 @@ export const InvestorDashboard: React.FC = () => {
 
   // SAFE DEBUG FILTER (NO SILENT FAILURES)
   const confirmedMeetings = meetings.filter(m =>
-    m.status === 'accepted' &&
-    (m.investorId === user.id || m.investorName === user.name)
+    m.status === 'accepted'
   );
 
   // 🔍 DEBUG (REMOVE LATER IF NEEDED)
