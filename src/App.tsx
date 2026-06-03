@@ -37,9 +37,9 @@ import { MeetingProvider } from './context/meetingcontext';
 
 function App() {
   return (
-    <AuthProvider>
-      <MeetingProvider>
-        <Router>
+    <Router>
+      <AuthProvider>
+        <MeetingProvider>
           <Routes>
             {/* Authentication Routes */}
             <Route path="/login" element={<LoginPage />} />
@@ -112,9 +112,9 @@ function App() {
             {/* Catch all other routes and redirect to login */}
             <Route path="*" element={<Navigate to="/login" replace />} />
           </Routes>
-        </Router>
-      </MeetingProvider>
-    </AuthProvider>
+        </MeetingProvider>
+      </AuthProvider>
+    </Router>
   );
 }
 
