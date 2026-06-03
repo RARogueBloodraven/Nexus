@@ -23,6 +23,7 @@ import { EntrepreneursPage } from './pages/entrepreneurs/EntrepreneursPage';
 import { MessagesPage } from './pages/messages/MessagesPage';
 import { NotificationsPage } from './pages/notifications/NotificationsPage';
 import { DocumentsPage } from './pages/documents/DocumentsPage';
+import { DocumentChamber } from './pages/documents/documentchamber';
 import { SettingsPage } from './pages/settings/SettingsPage';
 import { HelpPage } from './pages/help/HelpPage';
 import { DealsPage } from './pages/deals/DealsPage';
@@ -47,9 +48,14 @@ function App() {
         <Route path="/calendar" element={<DashboardLayout />}>
           <Route index element={<CalendarPage />} />
         </Route>
-        
+
         {/* videocall Routes */}
         <Route path="/video-call" element={<VideoCall />} />
+
+        {/* documentchamber Routes */}
+        <Route path="/documents" element={<DashboardLayout />}>
+          <Route index element={<DocumentChamber />} />
+        </Route>
 
 
         {/* meeting Routes */}
