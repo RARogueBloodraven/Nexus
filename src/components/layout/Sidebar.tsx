@@ -12,7 +12,8 @@ import {
   Settings,
   HelpCircle,
   Calendar,
-  Video
+  Video,
+  CreditCard,
 } from 'lucide-react';
 
 interface SidebarItemProps {
@@ -58,6 +59,11 @@ export const Sidebar: React.FC = () => {
       to: '/investors',
       icon: <CircleDollarSign size={20} />,
       text: 'Find Investors',
+    },
+    {
+      to: '/payments',
+      icon: <CreditCard size={20} />,
+      text: 'Payments',
     },
     {
       to: '/calendar',
@@ -106,6 +112,11 @@ export const Sidebar: React.FC = () => {
       to: '/entrepreneurs',
       icon: <Users size={20} />,
       text: 'Find Startups',
+    },
+    {
+      to: '/payments',
+      icon: <CreditCard size={20} />,
+      text: 'Payments',
     },
     {
       to: '/calendar',
