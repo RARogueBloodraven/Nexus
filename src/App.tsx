@@ -29,6 +29,7 @@ import { DealsPage } from './pages/deals/DealsPage';
 
 import CalendarPage from './pages/calendar/CalendarPage';
 import MeetingsPage from './pages/meetings/meetingpage';
+import { VideoCall } from './pages/video/videocall';
 
 
 // Chat Pages
@@ -46,6 +47,10 @@ function App() {
         <Route path="/calendar" element={<DashboardLayout />}>
           <Route index element={<CalendarPage />} />
         </Route>
+        
+        {/* videocall Routes */}
+        <Route path="/video-call" element={<VideoCall />} />
+
 
         {/* meeting Routes */}
         <Route path="/meetings" element={<DashboardLayout />}>
