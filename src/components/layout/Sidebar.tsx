@@ -11,7 +11,8 @@ import {
   FileText,
   Settings,
   HelpCircle,
-  Calendar
+  Calendar,
+  Video
 } from 'lucide-react';
 
 interface SidebarItemProps {
@@ -25,10 +26,9 @@ const SidebarItem: React.FC<SidebarItemProps> = ({ to, icon, text }) => {
     <NavLink
       to={to}
       className={({ isActive }) =>
-        `flex items-center py-2.5 px-4 rounded-md transition-colors duration-200 ${
-          isActive
-            ? 'bg-primary-50 text-primary-700'
-            : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
+        `flex items-center py-2.5 px-4 rounded-md transition-colors duration-200 ${isActive
+          ? 'bg-primary-50 text-primary-700'
+          : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
         }`
       }
     >
@@ -75,6 +75,11 @@ export const Sidebar: React.FC = () => {
       text: 'Messages',
     },
     {
+      to: '/video-call',
+      icon: <Video size={20} />,
+      text: 'Video Call',
+    },
+    {
       to: '/notifications',
       icon: <Bell size={20} />,
       text: 'Notifications',
@@ -116,6 +121,11 @@ export const Sidebar: React.FC = () => {
       to: '/messages',
       icon: <MessageCircle size={20} />,
       text: 'Messages',
+    },
+    {
+      to: '/video-call',
+      icon: <Video size={20} />,
+      text: 'Video Call',
     },
     {
       to: '/notifications',
