@@ -20,14 +20,20 @@ interface SidebarItemProps {
   to: string;
   icon: React.ReactNode;
   text: string;
+  className?: string;
 }
 
-const SidebarItem: React.FC<SidebarItemProps> = ({ to, icon, text }) => {
+const SidebarItem: React.FC<SidebarItemProps> = ({
+  to,
+  icon,
+  text,
+  className,
+}) => {
   return (
     <NavLink
       to={to}
       className={({ isActive }) =>
-        `flex items-center py-2.5 px-4 rounded-md transition-colors duration-200 ${isActive
+        `${className || ''} flex items-center py-2.5 px-4 rounded-md transition-colors duration-200 ${isActive
           ? 'bg-primary-50 text-primary-700'
           : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
         }`
@@ -74,6 +80,7 @@ export const Sidebar: React.FC = () => {
       to: '/meetings',
       icon: <Calendar size={20} />,
       text: 'Meeting Requests',
+      className: 'tour-meetings'
     },
     {
       to: '/messages',
@@ -84,6 +91,7 @@ export const Sidebar: React.FC = () => {
       to: '/video-call',
       icon: <Video size={20} />,
       text: 'Video Call',
+      className: 'tour-video'
     },
     {
       to: '/notifications',
@@ -94,6 +102,7 @@ export const Sidebar: React.FC = () => {
       to: '/documents',
       icon: <FileText size={20} />,
       text: 'Documents',
+      className: 'tour-documents'
     },
   ];
 
@@ -127,6 +136,7 @@ export const Sidebar: React.FC = () => {
       to: '/meetings',
       icon: <Calendar size={20} />,
       text: 'Meetings',
+      className: 'tour-meetings'
     },
     {
       to: '/messages',
@@ -137,6 +147,7 @@ export const Sidebar: React.FC = () => {
       to: '/video-call',
       icon: <Video size={20} />,
       text: 'Video Call',
+      className: 'tour-video'
     },
     {
       to: '/notifications',
@@ -169,7 +180,7 @@ export const Sidebar: React.FC = () => {
   ];
 
   return (
-    <div className="w-64 bg-white h-full border-r border-gray-200 hidden md:block">
+    <div className="w-64 bg-white h-full border-r border-gray-200 hidden md:block sidebar-dashboard">
       <div className="h-full flex flex-col">
         <div className="flex-1 py-4 overflow-y-auto">
           <div className="px-3 space-y-1">
@@ -179,6 +190,7 @@ export const Sidebar: React.FC = () => {
                 to={item.to}
                 icon={item.icon}
                 text={item.text}
+                className={item.className}
               />
             ))}
           </div>

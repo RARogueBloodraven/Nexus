@@ -34,6 +34,8 @@ import { VideoCall } from './pages/video/videocall';
 import PaymentsPage from './pages/payment/paymentpage';
 import OtpPage from './pages/auth/otppage';
 
+import { AppTour } from './components/walkthrough/AppTour';
+
 
 // Chat Pages
 import { ChatPage } from './pages/chat/ChatPage';
@@ -42,6 +44,8 @@ function App() {
   return (
     <AuthProvider>
       <Router>
+
+        <AppTour />
         <Routes>
           {/* Authentication Routes */}
           <Route path="/login" element={<LoginPage />} />
