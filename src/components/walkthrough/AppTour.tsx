@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import Joyride from 'react-joyride';
+import Joyride, { CallBackProps, STATUS, Step } from 'react-joyride';
 import { useLocation } from 'react-router-dom';
 
-const steps = [
+const steps: Step[] = [
   {
     target: 'body',
     content: 'Welcome to Business Nexus! Let us show you around.',
@@ -13,7 +13,7 @@ const steps = [
     content: 'This sidebar helps you navigate through the platform.',
   },
   {
-    taPrget: '.tour-meetings',
+    target: '.tour-meetings',
     content: 'Manage all meeting requests here.',
   },
   {
@@ -29,14 +29,14 @@ const steps = [
 export const AppTour: React.FC = () => {
   const location = useLocation();
 
-  const [run, setRun] = useState(
+  const [run, setRun] = useState<boolean>(
     !localStorage.getItem('tourCompleted')
   );
 
-  const handleCallback = (data: any) => {
+  const handleCallback = (data: CallBackProps) => {
     const { status } = data;
 
-    if (status === 'finished' || status === 'skipped') {
+    if (status === STATUS.FINISHED || status === STATUS.SKIPPED) {
       localStorage.setItem('tourCompleted', 'true');
       setRun(false);
     }
