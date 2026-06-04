@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Joyride, { CallBackProps, STATUS, Step } from 'react-joyride';
+import Joyride, { Step, STATUS } from 'react-joyride';
 import { useLocation } from 'react-router-dom';
 
 const steps: Step[] = [
@@ -33,7 +33,7 @@ export const AppTour: React.FC = () => {
     !localStorage.getItem('tourCompleted')
   );
 
-  const handleCallback = (data: CallBackProps) => {
+  const handleCallback = (data: any) => {
     const { status } = data;
 
     if (status === STATUS.FINISHED || status === STATUS.SKIPPED) {
