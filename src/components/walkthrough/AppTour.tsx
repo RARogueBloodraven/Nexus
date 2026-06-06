@@ -29,20 +29,19 @@ const steps: Step[] = [
 export const AppTour: React.FC = () => {
   const location = useLocation();
 
-  const [run, setRun] = useState<boolean>(
-    !localStorage.getItem('tourCompleted')
-  );
+  const [run, setRun] = useState<boolean>(true);
 
   const handleCallback = (data: any) => {
     const { status } = data;
 
     if (status === STATUS.FINISHED || status === STATUS.SKIPPED) {
-      localStorage.setItem('tourCompleted', 'true');
       setRun(false);
     }
   };
 
-  if (!location.pathname.includes('dashboard')) return null;
+  if (!location.pathname.includes('dashboard')) {
+    return null;
+  }
 
   return (
     <Joyride
